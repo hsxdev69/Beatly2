@@ -185,7 +185,7 @@ fun MiniPlayer(
 ) {
   val useNewMiniPlayerDesign by rememberPreference(UseNewMiniPlayerDesignKey, true)
 
-  val (useFloatingNavBar) = rememberPreference(UseFloatingNavBarKey, defaultValue = false)
+  val (useFloatingNavBar) = rememberPreference(UseFloatingNavBarKey, defaultValue = true)
   val progressState = remember { ProgressState(positionState, durationState) }
 
   if (useFloatingNavBar) {

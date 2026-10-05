@@ -115,7 +115,7 @@ fun GlassEffectSettings(
   val (navBarEnabled, onNavBarEnabledChange) =
     rememberPreference(LiquidGlassNavBarEnabledKey, defaultValue = true)
   val (useFloatingNavBar, onUseFloatingNavBarChange) =
-    rememberPreference(UseFloatingNavBarKey, defaultValue = false)
+    rememberPreference(UseFloatingNavBarKey, defaultValue = true)
 
   var showVibrancyDialog by rememberSaveable { mutableStateOf(false) }
   var showBlurRadiusDialog by rememberSaveable { mutableStateOf(false) }

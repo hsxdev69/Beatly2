@@ -23,9 +23,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -539,7 +542,7 @@ class MainActivity : ComponentActivity() {
               availableUpdateVersion = latestVersion
               availableUpdateChangelog = changelog
               availableUpdateDescription = description
-              showUpdateDialog = true
+              // showUpdateDialog disabled per user request
             }
 
             if (isAvailable && getUpdateNotificationsSetting(context)) {
@@ -710,29 +713,7 @@ class MainActivity : ComponentActivity() {
       darkTheme = useDarkTheme,
       pureBlack = pureBlack,
       themeColor = themeColor,
-    ) {
-      if (showUpdateDialog) {
-        echo.music.iad1tya.echomusic.component.UpdateAvailableDialog(
-          version = availableUpdateVersion,
-          changelog = availableUpdateChangelog,
-          description = availableUpdateDescription,
-          onDismiss = { showUpdateDialog = false }
-        )
-      } else {
-        whatsNewInfo?.let { info ->
-          echo.music.iad1tya.echomusic.updater.WhatsNewDialog(
-            version = BuildConfig.VERSION_NAME,
-            info = info,
-            onDismiss = {
-              echo.music.iad1tya.echomusic.updater.saveLastSeenChangelogVersion(
-                context,
-                BuildConfig.VERSION_NAME,
-              )
-              whatsNewInfo = null
-            }
-          )
-        }
-      }
+      // Update and whatsNew dialogs removed per user request
       BoxWithConstraints(
         modifier =
           Modifier.fillMaxSize()
@@ -872,7 +853,7 @@ class MainActivity : ComponentActivity() {
             label = "navBarHeight",
           )
 
-        val (useFloatingNavBar) = rememberPreference(UseFloatingNavBarKey, defaultValue = false)
+        val (useFloatingNavBar) = rememberPreference(UseFloatingNavBarKey, defaultValue = true)
         val floatingNavBarScrollConnection = rememberFloatingTabBarScrollConnection()
 
         val playerBottomSheetState =
@@ -1014,12 +995,9 @@ class MainActivity : ComponentActivity() {
 
         var showWelcomeDialog by remember { mutableStateOf(false) }
 
+        // WelcomeDialog disabled per user request
         LaunchedEffect(Unit) {
-          val prefs = context.dataStore.data.first()
-          val lastOpened = prefs[echo.music.iad1tya.constants.LastOpenedVersionCodeKey] ?: -1
-          if (lastOpened < BuildConfig.VERSION_CODE) {
-            showWelcomeDialog = true
-          }
+          context.dataStore.edit { it[echo.music.iad1tya.constants.LastOpenedVersionCodeKey] = BuildConfig.VERSION_CODE }
         }
 
         LaunchedEffect(Unit) {
@@ -1174,14 +1152,24 @@ class MainActivity : ComponentActivity() {
                 Row {
                   TopAppBar(
                     title = {
-                      Text(
-                        text = currentTitle,
-                        style =
-                          MaterialTheme.typography.titleLarge.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 24.sp
-                          ),
-                      )
+                      Row(verticalAlignment = Alignment.CenterVertically) {
+                        if (currentTitle == "Beatly") {
+                          Image(
+                            painter = painterResource(R.drawable.ic_launcher_nobg),
+                            contentDescription = null,
+                            modifier = Modifier.size(32.dp).clip(CircleShape)
+                          )
+                          Spacer(Modifier.width(10.dp))
+                        }
+                        Text(
+                          text = currentTitle,
+                          style =
+                            MaterialTheme.typography.titleLarge.copy(
+                              fontWeight = FontWeight.Bold,
+                              fontSize = 24.sp
+                            ),
+                        )
+                      }
                     },
                     actions = {
                       if (showHistoryButton) {
@@ -1639,17 +1627,6 @@ class MainActivity : ComponentActivity() {
                 navController.navigate(route)
               },
               homeViewModel = homeViewModel
-            )
-          }
-
-          if (showWelcomeDialog) {
-            WelcomeDialog(
-              onDismissRequest = {
-                showWelcomeDialog = false
-                coroutineScope.launch {
-                  context.dataStore.edit { it[echo.music.iad1tya.constants.LastOpenedVersionCodeKey] = BuildConfig.VERSION_CODE }
-                }
-              }
             )
           }
 
