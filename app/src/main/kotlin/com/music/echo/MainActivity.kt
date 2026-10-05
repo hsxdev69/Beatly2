@@ -713,7 +713,7 @@ class MainActivity : ComponentActivity() {
       darkTheme = useDarkTheme,
       pureBlack = pureBlack,
       themeColor = themeColor,
-      // Update and whatsNew dialogs removed per user request
+    ) {
       BoxWithConstraints(
         modifier =
           Modifier.fillMaxSize()
