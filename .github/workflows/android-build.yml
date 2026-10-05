@@ -1,4 +1,4 @@
-name: Android CI - Build Echo Music APK
+name: Android CI - Build Beatly APK
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    name: Build Echo Music Android APK
+    name: Build Beatly Android APK
     runs-on: ubuntu-latest
 
     steps:
@@ -25,20 +25,20 @@ jobs:
 
     - name: Generate Release Keystore
       run: |
-        keytool -genkeypair -v -keystore keystore.jks -alias echo -keyalg RSA -keysize 2048 -validity 10000 -storepass echomusic -keypass echomusic -dname "CN=Echo, OU=Echo, O=Echo, L=NY, S=NY, C=US"
+        keytool -genkeypair -v -keystore keystore.jks -alias beatly -keyalg RSA -keysize 2048 -validity 10000 -storepass beatlymusic -keypass beatlymusic -dname "CN=Beatly, OU=Beatly, O=Beatly, L=NY, S=NY, C=US"
 
     - name: Build Universal Release APK
       env:
-        STORE_PASSWORD: echomusic
-        KEY_ALIAS: echo
-        KEY_PASSWORD: echomusic
+        STORE_PASSWORD: beatlymusic
+        KEY_ALIAS: beatly
+        KEY_PASSWORD: beatlymusic
       run: |
         chmod +x gradlew
         ./gradlew assembleUniversalFossRelease --stacktrace
 
-    - name: Upload Echo Music APK Artifact
+    - name: Upload Beatly APK Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Echo-Music-Kotlin-Release-APK
+        name: Beatly-Release-APK
         path: app/build/outputs/apk/**/*.apk
         if-no-files-found: error

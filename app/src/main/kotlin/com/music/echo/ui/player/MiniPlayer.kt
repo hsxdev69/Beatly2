@@ -203,7 +203,7 @@ fun MiniPlayer(
         if (darkTheme == DarkMode.AUTO) isSystemInDarkTheme else darkTheme == DarkMode.ON
       }
     val pureBlackGlobalPref by
-      rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = false)
+      rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = true)
     val globalPureBlack = pureBlackGlobalPref && useDarkTheme
 
     val isFollowTheme = miniPlayerBackground == PlayerBackgroundStyle.DEFAULT
@@ -283,7 +283,7 @@ private fun NewMiniPlayer(progressState: ProgressState, modifier: Modifier = Mod
     )
 
   val pureBlackGlobalPref by
-    rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = false)
+    rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = true)
   val globalPureBlack = pureBlackGlobalPref && useDarkTheme
   val isFollowTheme = miniPlayerBackground == PlayerBackgroundStyle.DEFAULT
   val pureBlack = if (isFollowTheme) globalPureBlack else pureBlackMini
@@ -676,7 +676,7 @@ private fun LegacyMiniPlayer(progressState: ProgressState, modifier: Modifier = 
     )
 
   val pureBlackGlobalPref by
-    rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = false)
+    rememberPreference(echo.music.iad1tya.constants.PureBlackKey, defaultValue = true)
   val globalPureBlack = pureBlackGlobalPref && useDarkTheme
   val isFollowTheme = miniPlayerBackground == PlayerBackgroundStyle.DEFAULT
   val pureBlack = if (isFollowTheme) globalPureBlack else pureBlackMini

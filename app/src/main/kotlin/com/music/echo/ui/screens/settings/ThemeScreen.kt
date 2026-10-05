@@ -83,7 +83,7 @@ import echo.music.iad1tya.utils.rememberPreference
 @Composable
 fun ThemeScreen(navController: NavController, highlightKey: String? = null) {
   val (darkMode, onDarkModeChange) = rememberEnumPreference(DarkModeKey, DarkMode.AUTO)
-  val (pureBlack, onPureBlackChangeRaw) = rememberPreference(PureBlackKey, defaultValue = false)
+  val (pureBlack, onPureBlackChangeRaw) = rememberPreference(PureBlackKey, defaultValue = true)
   val (_, onPureBlackMiniPlayerChange) =
     rememberPreference(PureBlackMiniPlayerKey, defaultValue = false)
 

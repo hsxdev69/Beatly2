@@ -651,7 +651,7 @@ class MainActivity : ComponentActivity() {
 
     LaunchedEffect(useDarkTheme) { setSystemBarAppearance(useDarkTheme) }
 
-    val pureBlackEnabled by rememberPreference(PureBlackKey, defaultValue = false)
+    val pureBlackEnabled by rememberPreference(PureBlackKey, defaultValue = true)
     val pureBlack = remember(pureBlackEnabled, useDarkTheme) { pureBlackEnabled && useDarkTheme }
 
     val (selectedThemeColorInt) =
@@ -1063,7 +1063,7 @@ class MainActivity : ComponentActivity() {
 
         val currentTitle =
           when (navBackStackEntry?.destination?.route) {
-            Screens.Home.route -> "Echo Music"
+            Screens.Home.route -> "Beatly"
             Screens.Search.route -> stringResource(R.string.search)
             Screens.Library.route -> stringResource(R.string.filter_library)
             Screens.ListenTogether.route -> stringResource(R.string.together)
@@ -1078,7 +1078,7 @@ class MainActivity : ComponentActivity() {
         val baseBg = if (pureBlack) Color.Black else MaterialTheme.colorScheme.surfaceContainer
 
         val (liquidGlassGlobalEnabled) =
-          rememberPreference(LiquidGlassGlobalEnabledKey, defaultValue = false)
+          rememberPreference(LiquidGlassGlobalEnabledKey, defaultValue = true)
         val (liquidGlassVibrancy) = rememberPreference(LiquidGlassVibrancyKey, defaultValue = 1f)
         val (liquidGlassBlurRadius) =
           rememberPreference(LiquidGlassBlurRadiusKey, defaultValue = 8f)
